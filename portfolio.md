@@ -230,10 +230,10 @@ Programmatically generates Excel workbooks with conditional formatting (green fo
 
 Owned end to end development of this analytics platform over 5 major iterations:
 
-- **Initial System Design (4181acf):** Architected the dual binary approach (twoballs.go for scraping, generate_matchups.go for analysis) with CSV based handoff between stages
-- **Head to Head Generation Logic (e2266f2):** Implemented the core matchup pairing algorithm and probability calculation pipeline with normal distribution transformations
-- **Statistical Enhancement (6b1474a):** Added probability adjustment methods to extract true comparative probabilities, improving evaluation accuracy
-- **Confidence Scoring Refinement (fb6c6b1):** Evolved from fixed tier approach to sophisticated tiered fractional system with variance dampening and per tier validation
-- **Transaction & Bounceback Parsers (b618c5f):** Expanded data ingestion capabilities with JavaScript scrapers for transaction history analysis and bounceback metrics from nested iframe Power BI reports
+- **Initial System Design:** Architected the dual binary approach (twoballs.go for scraping, generate_matchups.go for analysis) with CSV based handoff between stages
+- **Head to Head Generation Logic:** Implemented the core matchup pairing algorithm and probability calculation pipeline with normal distribution transformations
+- **Statistical Enhancement:** Added probability adjustment methods to extract true comparative probabilities, improving evaluation accuracy
+- **Confidence Scoring Refinement:** Evolved from fixed tier approach to sophisticated tiered fractional system with variance dampening and per tier validation
+- **Transaction & Bounceback Parsers:** Expanded data ingestion capabilities with JavaScript scrapers for transaction history analysis and bounceback metrics from nested iframe Power BI reports
 
 The codebase demonstrates ownership of statistical modeling, ETL pipeline design, browser automation, and report generation. Work focused on balancing computational rigor (statistical correctness) with practical constraints (execution speed during live tournaments, human readable output formats).
