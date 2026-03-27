@@ -1,0 +1,661 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Backend Engineering Portfolio</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            line-height: 1.7;
+            color: #2d3748;
+            background-color: #ffffff;
+            padding: 60px 20px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        h1 {
+            font-size: 2.8em;
+            margin-bottom: 60px;
+            color: #1a202c;
+            font-weight: 600;
+            letter-spacing: -0.5px;
+        }
+
+        .project {
+            margin-bottom: 60px;
+            padding-bottom: 40px;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        .project:last-child {
+            border-bottom: none;
+        }
+
+        .project-header {
+            margin-bottom: 15px;
+        }
+
+        .project-header h2 {
+            font-size: 1.6em;
+            color: #1a202c;
+            font-weight: 600;
+        }
+
+        .project-overview {
+            color: #4a5568;
+            line-height: 1.8;
+            margin-bottom: 20px;
+        }
+
+        .expand-toggle {
+            cursor: pointer;
+            font-size: 0.95em;
+            color: #4299e1;
+            margin-top: 10px;
+            display: inline-block;
+            transition: color 0.2s ease;
+        }
+
+        .expand-toggle:hover {
+            color: #2b6cb0;
+        }
+
+        .project.active .expand-toggle {
+            display: none;
+        }
+
+        .project-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s ease;
+        }
+
+        .project.active .project-content {
+            max-height: 15000px;
+        }
+
+        .section {
+            margin-bottom: 30px;
+        }
+
+        h3 {
+            font-size: 1.2em;
+            color: #1a202c;
+            margin-bottom: 12px;
+            margin-top: 20px;
+            font-weight: 600;
+        }
+
+        h4 {
+            font-size: 1em;
+            color: #2d3748;
+            margin-top: 18px;
+            margin-bottom: 8px;
+            font-weight: 600;
+        }
+
+        p {
+            margin-bottom: 15px;
+            color: #4a5568;
+            line-height: 1.8;
+        }
+
+        ul,
+        ol {
+            margin-left: 24px;
+            margin-bottom: 15px;
+        }
+
+        li {
+            margin-bottom: 8px;
+            color: #4a5568;
+            line-height: 1.7;
+        }
+
+        strong {
+            color: #2d3748;
+            font-weight: 600;
+        }
+
+        .tech-list {
+            list-style: none;
+            margin-left: 0;
+        }
+
+        .tech-list li {
+            padding-left: 0;
+        }
+
+        .challenge-block {
+            margin-bottom: 22px;
+        }
+
+        .challenge-block h4 {
+            margin-top: 0;
+            margin-bottom: 6px;
+        }
+
+        code {
+            background-color: #f7fafc;
+            padding: 3px 6px;
+            border-radius: 3px;
+            font-size: 0.9em;
+            color: #2d3748;
+            font-family: 'SF Mono', Monaco, 'Cascadia Code', 'Roboto Mono', Consolas, monospace;
+        }
+
+        @media (max-width: 768px) {
+            body {
+                padding: 40px 20px;
+            }
+
+            h1 {
+                font-size: 2.2em;
+                margin-bottom: 50px;
+            }
+
+            .project-header h2 {
+                font-size: 1.4em;
+            }
+
+            .project {
+                margin-bottom: 50px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>Backend Engineering Portfolio</h1>
+
+        <div class="project">
+            <div class="project-header">
+                <h2>Weather Forecast Service</h2>
+            </div>
+            <p class="project-overview">A production ready Go microservice that delivers real time weather forecasts for
+                random US locations by orchestrating multiple external APIs. The service fetches location data,
+                coordinates it with the National Weather Service API, and returns detailed forecasts through a
+                lightweight HTTP interface. Built as a proof of concept with full containerization and Kubernetes
+                deployment pipelines, demonstrating modern cloud native development practices.</p>
+            <span class="expand-toggle" onclick="toggleProject(this)">View details →</span>
+            <div class="project-content">
+                <div class="section">
+                    <h3>Architecture & Tech Stack</h3>
+                    <h4>Core Technologies:</h4>
+                    <ul class="tech-list">
+                        <li>Go 1.24+ with standard library (<code>net/http</code>, <code>encoding/json</code>)</li>
+                        <li>Docker multi stage builds for optimized container images</li>
+                        <li>Kubernetes orchestration with NodePort services</li>
+                        <li>GitHub Container Registry (GHCR) for image distribution</li>
+                        <li>RESTful API design patterns</li>
+                    </ul>
+
+                    <h4>Infrastructure:</h4>
+                    <ul class="tech-list">
+                        <li>Alpine Linux base images (minimal 3.21 runtime)</li>
+                        <li>Single endpoint HTTP service (port 5000)</li>
+                        <li>Stateless microservice architecture</li>
+                        <li>External API integration with locations.patch3s.dev and weather.gov</li>
+                    </ul>
+                </div>
+
+                <div class="section">
+                    <h3>Scale & Complexity</h3>
+                    <ul>
+                        <li><strong>API Integration:</strong> Coordinates 3 distinct API calls per request (location
+                            fetch, coordinates to forecast URL mapping, forecast retrieval)</li>
+                        <li><strong>Deployment Pipeline:</strong> Automated CI/CD via shell scripting (build, tag, push,
+                            deploy)</li>
+                        <li><strong>Container Optimization:</strong> Multi stage Docker builds reducing image size by
+                            using <code>CGO_ENABLED=0</code> for static compilation</li>
+                        <li><strong>Cloud Native:</strong> Full Kubernetes deployment with configurable replica scaling
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="section">
+                    <h3>Key Engineering Challenges Solved</h3>
+
+                    <div class="challenge-block">
+                        <h4>Multi API Orchestration</h4>
+                        <p>Designed a sequential API flow that chains three external services (random location provider,
+                            NWS coordinates API, and forecast API) with comprehensive error handling at each step.
+                            Implemented nil safety checks and graceful degradation when upstream services fail.</p>
+                    </div>
+
+                    <div class="challenge-block">
+                        <h4>Production Ready Containerization</h4>
+                        <p>Architected multi stage Docker builds separating compilation and runtime environments. Used
+                            Alpine Linux to minimize attack surface and image size while maintaining Go binary
+                            compatibility through static compilation (<code>CGO_ENABLED=0</code>).</p>
+                    </div>
+
+                    <div class="challenge-block">
+                        <h4>Kubernetes Deployment Strategy</h4>
+                        <p>Created flexible deployment configurations supporting both local development (with
+                            <code>imagePullPolicy: Never</code>) and production workflows (GitHub Container Registry
+                            with <code>imagePullPolicy: Always</code>). Implemented NodePort services for external
+                            access patterns.
+                        </p>
+                    </div>
+
+                    <div class="challenge-block">
+                        <h4>Observability & Debugging</h4>
+                        <p>Added structured logging throughout the request lifecycle, tracking API calls, URL
+                            construction, and response marshalling. Identified areas for enhancement including log level
+                            granularity and environment based configuration.</p>
+                    </div>
+
+                    <div class="challenge-block">
+                        <h4>API Error Handling</h4>
+                        <p>Built resilient error handling that translates upstream API failures into appropriate HTTP
+                            status codes and user friendly messages. Implemented validation for empty/nil responses and
+                            malformed data from third party services.</p>
+                    </div>
+                </div>
+
+                <div class="section">
+                    <h3>My Contributions</h3>
+                    <p>Built this microservice end to end from initial scaffolding through production deployment.
+                        Started with core HTTP server implementation, then progressively added external API integrations
+                        (random location fetching, National Weather Service coordinates mapping, and forecast
+                        retrieval). Implemented comprehensive logging for request tracing and debugging. Containerized
+                        the application using Docker multi stage builds for optimization, then created Kubernetes
+                        deployment manifests supporting both local and cloud environments. Developed automated
+                        deployment scripts to streamline the build tag push deploy workflow. Documented architectural
+                        decisions, API flows, and future scaling considerations for production readiness.</p>
+                    <p>Key ownership areas include the complete request handling pipeline, external API integration
+                        patterns, containerization strategy, and Kubernetes orchestration. Also identified and
+                        documented technical debt items around concurrency patterns, HTTP client timeouts, and logging
+                        granularity for future iterations.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="project">
+            <div class="project-header">
+                <h2>Go Algorithm & Data Structures Practice</h2>
+            </div>
+            <p class="project-overview">This repository demonstrates systematic practice of core backend engineering
+                concepts through algorithmic problem solving in Go. It showcases proficiency in data structures,
+                algorithm optimization, API integration, and data processing, foundational skills for building scalable
+                backend systems. The codebase includes solutions to 18+ problems spanning string manipulation, linked
+                list operations, interval merging, API consumption, and CSV data processing. Each solution emphasizes
+                clean code, efficient algorithms, and practical Go patterns that translate directly to production
+                backend development.</p>
+            <span class="expand-toggle" onclick="toggleProject(this)">View details →</span>
+            <div class="project-content">
+                <div class="section">
+                    <h3>Architecture & Tech Stack</h3>
+                    <p><strong>Language:</strong> Go 1.x with idiomatic patterns (structs, interfaces, goroutines ready
+                        design)</p>
+                    <p><strong>Data Processing:</strong> CSV parsing with buffered I/O, JSON marshaling/unmarshaling,
+                        reflection based generic filtering</p>
+                    <p><strong>External Integration:</strong> HTTP client implementation for REST API consumption (OMDB
+                        API), proper error handling and resource cleanup</p>
+
+                    <h4>Core Patterns:</h4>
+                    <ul class="tech-list">
+                        <li>Dynamic function dispatch registry for extensible CLI tooling</li>
+                        <li>Two pointer algorithms for optimal O(n) traversals</li>
+                        <li>Hash map based deduplication and lookup optimization</li>
+                        <li>Linked list in place manipulation without extra space allocation</li>
+                        <li>Sliding window techniques for subarray analysis</li>
+                    </ul>
+
+                    <p><strong>Infrastructure:</strong> Command line interface with flag based routing, modular function
+                        organization supporting 15+ independent problem domains</p>
+                </div>
+
+                <div class="section">
+                    <h3>Scale & Complexity</h3>
+                    <p><strong>Code Volume:</strong> 1,200+ lines across 18 modules with zero external dependencies
+                        beyond standard library</p>
+                    <p><strong>Algorithm Complexity:</strong> Solutions optimized for time complexity ranging from O(n)
+                        to O(n²) depending on problem constraints, with space complexity minimized through in place
+                        operations where possible</p>
+                    <p><strong>Data Handling:</strong> CSV processing capability for datasets with buffered reading,
+                        JSON payload parsing with struct mapping, HTTP response streaming with proper connection
+                        management</p>
+
+                    <h4>Problem Domains:</h4>
+                    <ul>
+                        <li>8 advanced data structure problems (linked lists, arrays, hash maps)</li>
+                        <li>4 string processing challenges (palindrome detection, rotation verification, bracket
+                            matching)</li>
+                        <li>3 API/data integration tasks (REST consumption, CSV parsing, JSON transformation)</li>
+                        <li>3 business logic implementations (card game rules, pricing calculations, inventory
+                            management)</li>
+                    </ul>
+                </div>
+
+                <div class="section">
+                    <h3>Key Engineering Challenges Solved</h3>
+
+                    <div class="challenge-block">
+                        <h4>Efficient Interval Merging</h4>
+                        <p>Implemented O(n log n) interval merge algorithm handling overlapping time ranges through
+                            sorting and single pass consolidation, applicable to scheduling systems and time series data
+                            processing.</p>
+                    </div>
+
+                    <div class="challenge-block">
+                        <h4>Zero Allocation Linked List Operations</h4>
+                        <p>Developed in place linked list reversal and even/odd node extraction using pointer
+                            manipulation without additional memory overhead, demonstrating understanding of memory
+                            efficient data structure operations critical for high throughput systems.</p>
+                    </div>
+
+                    <div class="challenge-block">
+                        <h4>Generic Data Filtering with Reflection</h4>
+                        <p>Built reflection based generic filter supporting arbitrary struct field queries, enabling
+                            reusable data access patterns without code duplication. Pattern applicable to building
+                            flexible query layers over heterogeneous data sources.</p>
+                    </div>
+
+                    <div class="challenge-block">
+                        <h4>HTTP Client Resilience</h4>
+                        <p>Implemented proper resource cleanup patterns (defer for response body closing), error
+                            propagation, and JSON deserialization with type safety. Handles API failures gracefully and
+                            demonstrates production ready HTTP client patterns.</p>
+                    </div>
+
+                    <div class="challenge-block">
+                        <h4>Balanced Permutation Analysis</h4>
+                        <p>Solved complex combinatorial problem (identifying balanced subsequences in O(n²)) through
+                            optimized sliding window with min/max tracking, showcasing ability to transform brute force
+                            algorithms into practical solutions.</p>
+                    </div>
+
+                    <div class="challenge-block">
+                        <h4>Dynamic Function Registry</h4>
+                        <p>Designed extensible CLI architecture using function maps and closures, allowing runtime
+                            function selection without switch/case sprawl. Pattern scales to plugin systems and handler
+                            registration in web frameworks.</p>
+                    </div>
+                </div>
+
+                <div class="section">
+                    <h3>My Contributions</h3>
+                    <p>This repository represents continuous skill development in Go backend engineering, with
+                        implementations spanning algorithmic problem solving, data processing pipelines, and API
+                        integration patterns. All solutions written independently with focus on code clarity,
+                        performance optimization, and Go best practices. The modular structure demonstrates ability to
+                        organize complex codebases with clear separation of concerns and extensible architecture.
+                        Solutions reflect understanding of production engineering tradeoffs between time/space
+                        complexity, readability, and maintainability.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="project">
+            <div class="project-header">
+                <h2>Golf Statistical Analysis System</h2>
+            </div>
+            <p class="project-overview">A statistical analysis platform built in Go for evaluating professional golf
+                players across multiple performance dimensions. The system aggregates player performance data from
+                multiple sources, applies normalized scoring models, and generates ranked player evaluations. It
+                includes a post tournament evaluation engine that analyzes selection patterns, player uniqueness, and
+                performance probability through Monte Carlo simulation.</p>
+            <span class="expand-toggle" onclick="toggleProject(this)">View details →</span>
+            <div class="project-content">
+                <div class="section">
+                    <h3>Architecture & Tech Stack</h3>
+                    <p>Built as a modular data pipeline in <strong>Go 1.x</strong>, leveraging standard library
+                        components for maximum performance and minimal dependencies:</p>
+                    <ul class="tech-list">
+                        <li><strong>HTTP client</strong> for real time API consumption (DataGolf stats API)</li>
+                        <li><strong>CSV/JSON parsers</strong> for multi source data ingestion and export</li>
+                        <li><strong>Excel processing</strong> for integration with external modeling tools</li>
+                        <li><strong>Statistical computing</strong> using native math libraries for Z score normalization
+                            and variance calculations</li>
+                    </ul>
+                    <p>The system follows a functional pipeline architecture with clear separation between data
+                        ingestion, transformation, and export stages. State is managed through in memory maps with
+                        deterministic ordering for reproducible results.</p>
+                </div>
+
+                <div class="section">
+                    <h3>Scale & Complexity</h3>
+                    <ul>
+                        <li><strong>Data volume:</strong> Processes 70+ player records weekly with 15+ statistical
+                            attributes per player</li>
+                        <li><strong>External integrations:</strong> 3+ data sources (DataGolf API, projection systems,
+                            analytical weight configurations)</li>
+                        <li><strong>Computation:</strong> 10,000 Monte Carlo simulations per evaluation with variance
+                            modeling</li>
+                        <li><strong>Output generation:</strong> Performance stratified player pools across 6 tiers</li>
+                        <li><strong>Combinatorial analysis:</strong> Evaluates feasible comparison space of ~7.4M
+                            combinations from 156M theoretical possibilities</li>
+                    </ul>
+                </div>
+
+                <div class="section">
+                    <h3>Key Engineering Challenges Solved</h3>
+
+                    <div class="challenge-block">
+                        <h4>Statistical Normalization Across Heterogeneous Data Sources</h4>
+                        <p>Built a Z score normalization engine that transforms raw statistics (strokes gained, driving
+                            distance, greens in regulation) into comparable metrics. This enables apples to apples
+                            comparison across different measurement scales and accounts for population variance. The
+                            solution handles missing data gracefully and maintains statistical validity when merging
+                            datasets.</p>
+                    </div>
+
+                    <div class="challenge-block">
+                        <h4>Dynamic Weighting System for Context Specific Optimization</h4>
+                        <p>Implemented a configurable weighting model that adjusts statistical importance based on
+                            course characteristics. For example, a tight tree lined course emphasizes driving accuracy
+                            over distance, while a links course rewards distance and wind play. The system recalculates
+                            player rankings in real time as weights change, enabling rapid iteration on analytical
+                            models.</p>
+                    </div>
+
+                    <div class="challenge-block">
+                        <h4>Monte Carlo Simulation for Probabilistic Outcome Modeling</h4>
+                        <p>Developed a simulation engine that runs 10,000 trials per evaluation to estimate performance
+                            rates and outcome distributions. The challenge was calibrating variance (settled on 20%
+                            based on PGA historical volatility) and ensuring the simulation runtime remained practical.
+                            Optimized by pre computing player distributions and using efficient random number
+                            generation.</p>
+                    </div>
+
+                    <div class="challenge-block">
+                        <h4>Combinatorial Explosion in Comparison Space Analysis</h4>
+                        <p>Solved the computational challenge of analyzing player uniqueness in a space with 156M
+                            theoretical combinations. Implemented constraint filtering to reduce feasible space to 7.4M,
+                            then built correlation matrices to identify evaluation clusters. This revealed that
+                            uniqueness optimization has diminishing returns and strategic leverage matters more than
+                            pure differentiation.</p>
+                    </div>
+
+                    <div class="challenge-block">
+                        <h4>Data Pipeline Orchestration with Error Recovery</h4>
+                        <p>Built a fault tolerant ingestion pipeline that handles missing data, API failures, and schema
+                            mismatches. The system includes name normalization (handling "Ludvig Åberg" vs "Ludvig
+                            Aberg"), retry logic with exponential backoff, and intermediate result caching to enable
+                            fast iteration without re fetching external data.</p>
+                    </div>
+                </div>
+
+                <div class="section">
+                    <h3>My Contributions</h3>
+                    <p>Built this system from the ground up as the sole developer. Key ownership areas include:</p>
+                    <ul>
+                        <li><strong>Core analysis pipeline</strong>: Player struct modeling, Z score
+                            calculation engine, weighted scoring system, performance stratified pool generation</li>
+                        <li><strong>Evaluation framework</strong> (stats/review/): Combinatorial analysis, Monte Carlo
+                            simulation engine, uniqueness scoring, leverage metrics, correlation analysis</li>
+                        <li><strong>Data integration:</strong> Multi source CSV/JSON parsing, API client implementation,
+                            Excel interop for external tool compatibility</li>
+                        <li><strong>Statistical modeling:</strong> Z score normalization, variance calibration,
+                            correlation matrix generation, entropy calculations for evaluation rarity</li>
+                    </ul>
+                    <p>The project demonstrates end to end ownership of a statistical computing pipeline from data
+                        ingestion through algorithmic analysis to actionable output generation.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="project">
+            <div class="project-header">
+                <h2>PGA Player Analytics Platform</h2>
+            </div>
+            <p class="project-overview">A comprehensive golf analytics system for head to head player comparisons and
+                tournament performance analysis. The platform ingests live tournament data, historical player
+                statistics, and comparative performance metrics to generate probability based matchup evaluations using
+                advanced statistical modeling. Built to process real time data from multiple sources (Power BI
+                dashboards, sports analytics platforms, and tournament feeds), transform it through multi stage
+                analytical pipelines, and output actionable insights via Excel reports with visual indicators and ranked
+                recommendations.</p>
+            <span class="expand-toggle" onclick="toggleProject(this)">View details →</span>
+            <div class="project-content">
+                <div class="section">
+                    <h3>Architecture & Tech Stack</h3>
+                    <h4>Core Technologies:</h4>
+                    <ul class="tech-list">
+                        <li>Go 1.24 (primary computation engine)</li>
+                        <li>JavaScript/TypeScript (data extraction and scraping)</li>
+                        <li>Excel/CSV pipelines for data I/O</li>
+                    </ul>
+
+                    <h4>Key Libraries & Tools:</h4>
+                    <ul class="tech-list">
+                        <li><code>go-rod</code> for browser automation and web scraping</li>
+                        <li><code>excelize</code> for programmatic Excel manipulation and report generation</li>
+                        <li>Vanilla JavaScript for Power BI virtualized table parsing with async scroll handling</li>
+                    </ul>
+
+                    <h4>Data Flow:</h4>
+                    <ol>
+                        <li>Web scraping layer extracts live comparison data using headless browser automation</li>
+                        <li>Power BI scrapers parse virtualized tables (handling lazy loaded rows) for player statistics
+                            across multiple dimensions (trends, bounceback metrics, course fit)</li>
+                        <li>Go based analytics engine applies statistical models (normal distribution, probability
+                            adjustments)</li>
+                        <li>Report generation creates multi format Excel outputs with conditional styling and sorted
+                            recommendations</li>
+                    </ol>
+
+                    <h4>Infrastructure Approach:</h4>
+                    <ul class="tech-list">
+                        <li>File based data pipeline with CSV/XLSX intermediate formats</li>
+                        <li>Stateless computation model for reproducibility</li>
+                        <li>Local execution optimized for rapid iteration during live tournaments</li>
+                    </ul>
+                </div>
+
+                <div class="section">
+                    <h3>Scale & Complexity</h3>
+                    <ul>
+                        <li><strong>Data Volume:</strong> Processes 120+ player statistical profiles per tournament with
+                            10+ metrics per player</li>
+                        <li><strong>Real time Constraints:</strong> Scrapes and analyzes 50+ live matchup comparisons
+                            within tournament windows</li>
+                        <li><strong>Transformation Pipeline:</strong> 4 stage data flow (scrape, parse, analyze, report)
+                            with validation at each stage</li>
+                        <li><strong>Output Artifacts:</strong> Generates 3 distinct Excel reports per run (full
+                            matchups, sorted evaluations, statistics lookup tables)</li>
+                        <li><strong>Data Deduplication:</strong> Implements Map based deduplication across virtualized
+                            scrolling to handle 1000+ DOM mutations</li>
+                        <li><strong>Computational Complexity:</strong> Calculates adjusted probability distributions
+                            with volatility weighting for every matchup pair</li>
+                    </ul>
+                </div>
+
+                <div class="section">
+                    <h3>Key Engineering Challenges Solved</h3>
+
+                    <div class="challenge-block">
+                        <h4>Virtualized Table Scraping at Scale</h4>
+                        <p>Power BI dashboards use infinite scroll virtualization, only rendering visible rows. Built
+                            incremental scroll algorithms with configurable step sizes (50px increments), deduplication
+                            via hash maps keyed on player names, and validation passes to recover missing data. Handles
+                            cross iframe navigation, fallback selectors for evolving DOM structures, and progress
+                            logging for monitoring.</p>
+                    </div>
+
+                    <div class="challenge-block">
+                        <h4>Statistical Model Pipeline Architecture</h4>
+                        <p>Designed a composable probability calculation system: (1) compute adjusted Z score
+                            differences using volatility weighted denominators, (2) apply standard normal CDF
+                            transformation, (3) convert comparative metrics to implied probabilities, (4) apply
+                            statistical corrections to remove systematic bias, (5) calculate confidence deltas as
+                            adjusted vs baseline probability differences. Each stage isolated for testability and
+                            transparency.</p>
+                    </div>
+
+                    <div class="challenge-block">
+                        <h4>Confidence Scoring with Variance Adjustment</h4>
+                        <p>Implemented tiered fractional confidence system to manage high variance golf outcomes. Uses 4
+                            tier progressive evaluation based on calculated confidence magnitude, with validation
+                            thresholds at each tier. Includes variance modifier (1.5x dampening) for practical
+                            interpretation in high volatility scenarios.</p>
+                    </div>
+
+                    <div class="challenge-block">
+                        <h4>Multi Source Data Reconciliation</h4>
+                        <p>Coordinated player name matching across heterogeneous sources (comparison feeds, Power BI
+                            analytics dashboards, DataGolf tournament stats). Built fuzzy matching with whitespace
+                            normalization and missing data warnings to surface reconciliation failures early in the
+                            pipeline.</p>
+                    </div>
+
+                    <div class="challenge-block">
+                        <h4>Dynamic Report Generation with Visual Encoding</h4>
+                        <p>Programmatically generates Excel workbooks with conditional formatting (green for positive
+                            evaluations, red for filtered results, blue separators), sorted output tables by highest
+                            confidence magnitude, and statistical summaries. Implements row based layouts with
+                            consistent 7 row per matchup structure for scanning efficiency.</p>
+                    </div>
+                </div>
+
+                <div class="section">
+                    <h3>My Contributions</h3>
+                    <p>Owned end to end development of this analytics platform over 5 major iterations:</p>
+                    <ul>
+                        <li><strong>Initial System Design:</strong> Architected the scraping and analysis with
+                            CSV based handoff between stages</li>
+                        <li><strong>Head to Head Generation Logic:</strong> Implemented the core matchup
+                            pairing algorithm and probability calculation pipeline with normal distribution
+                            transformations</li>
+                        <li><strong>Statistical Enhancement:</strong> Added probability adjustment methods to
+                            extract true comparative probabilities, improving evaluation accuracy</li>
+                        <li><strong>Confidence Scoring Refinement:</strong> Evolved from fixed tier approach
+                            to sophisticated tiered fractional system with variance dampening and per tier validation
+                        </li>
+                        <li><strong>Transaction & Bounceback Parsers:</strong> Expanded data ingestion
+                            capabilities with JavaScript scrapers for transaction history analysis and bounceback
+                            metrics from nested iframe Power BI reports</li>
+                    </ul>
+                    <p>The codebase demonstrates ownership of statistical modeling, ETL pipeline design, browser
+                        automation, and report generation. Work focused on balancing computational rigor (statistical
+                        correctness) with practical constraints (execution speed during live tournaments, human readable
+                        output formats).</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function toggleProject(toggle) {
+            const project = toggle.parentElement;
+            project.classList.toggle('active');
+        }
+    </script>
+</body>
+
+</html>
